@@ -3,21 +3,21 @@ package net.ifok.project.swagger.config;
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import springfox.documentation.RequestHandler;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger.web.DocExpansion;
-import springfox.documentation.swagger.web.ModelRendering;
-import springfox.documentation.swagger.web.OperationsSorter;
-import springfox.documentation.swagger.web.TagsSorter;
-import springfox.documentation.swagger.web.UiConfiguration;
-import springfox.documentation.swagger.web.UiConfigurationBuilder;
+import springfox.documentation.swagger.web.*;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.Arrays;
@@ -33,50 +33,39 @@ import java.util.List;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
-    @Value("${api.document.enabled}")
-    boolean enabled;
+    @Autowired
+    SwaggerProperties swaggerProperties;
     /**
      * 数据配置部分
      * @return
      */
     @Bean
+    @ConditionalOnMissingBean
     public Docket swaggerDataConfig(){
-        return new Docket(DocumentationType.SWAGGER_2)
-                /**
-                 * 是否启用文档
-                 */
-                .enable(enabled)
-                /***
-                 * 文档信息
-                 */
-                .apiInfo(apiInfo())
-                .select()
-                /***
-                 * 扫描需要生成api文档的包
-                 */
-                /***
-                 * 默认提供扫描单个包
-                 */
-//                .apis(RequestHandlerSelectors.basePackage("net.ifok.project.swagger"))
-                /***
-                 * 扩展支持多个包
-                 */
-                .apis(basePackage(Arrays.asList("net.ifok.project.swagger.controller")))
-                /**
-                 * 包撒选后再进行api url 赛选
-                 */
-                .paths(PathSelectors.ant("/api/**"))
-                .build();
+        System.out.println("是否启用配置："+swaggerProperties.getEnabled());
+        Docket docket = new Docket(DocumentationType.SWAGGER_2);
+        //是否启用
+        docket = docket.enable(swaggerProperties.getEnabled());
+        docket = docket.apiInfo(apiInfo());
+        //设置路径匹配
+        if (!StringUtils.isEmpty(swaggerProperties.getUrlPattern())){
+            docket=docket.select().paths(PathSelectors.ant(swaggerProperties.getUrlPattern())).build();
+        }
+        //设置包配置
+        if (!CollectionUtils.isEmpty(swaggerProperties.getPackages())){
+            docket=docket.select().apis(basePackage(swaggerProperties.getPackages())).build();
+        }
+        return docket;
     }
 
     private ApiInfo apiInfo(){
-        return new ApiInfoBuilder().title("开放API接口文档")
-                .description("接口文档")
+        return new ApiInfoBuilder().title(swaggerProperties.getUiTitle())
+                .description(swaggerProperties.getUiDescription())
                 /***
                  * 将“url”换成自己的ip:port
                  **/
-                .termsOfServiceUrl("http://localhost:8080/swagger-ui.html")
-                .version("1.0.0")
+                .termsOfServiceUrl(swaggerProperties.getUiUrl())
+                .version(swaggerProperties.getUiVersion())
                 .build();
     }
 
@@ -107,6 +96,8 @@ public class SwaggerConfig {
 
     /**
      * UI配置部分
+     *
+     * 当配置文件中spring.swagger.config.enabledUi=true时。该配置生效
      * @return
      */
     @Bean
