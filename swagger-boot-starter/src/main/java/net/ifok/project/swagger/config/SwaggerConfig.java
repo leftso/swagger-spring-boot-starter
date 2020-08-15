@@ -42,7 +42,6 @@ public class SwaggerConfig {
     @Bean
     @ConditionalOnMissingBean
     public Docket swaggerDataConfig(){
-        System.out.println("是否启用配置："+swaggerProperties.getEnabled());
         Docket docket = new Docket(DocumentationType.SWAGGER_2);
         //是否启用
         docket = docket.enable(swaggerProperties.getEnabled());

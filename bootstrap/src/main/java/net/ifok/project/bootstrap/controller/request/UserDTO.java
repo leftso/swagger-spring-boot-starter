@@ -23,7 +23,7 @@ public class UserDTO {
 
     @ApiModelProperty(value = "用户名",notes = "用户名，字符类型数据一般2-3位",name = "name",required = true)
     public String name;
-    @ApiModelProperty(value = "年龄",notes = "年龄，数字类型",name = "age",required = true)
+    @ApiModelProperty(value = "年龄",notes = "年龄，数字类型",name = "age",required = true,example = "10")
     public Integer age;
 
 }
