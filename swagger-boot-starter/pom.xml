@@ -59,4 +59,37 @@
 
     </dependencies>
 
+    <!--jar下载仓库配置-->
+    <repositories>
+        <repository>
+            <id>ifok-releases</id>
+            <url>https://maven.ifok.net:10202/repository/maven-public/</url>
+        </repository>
+    </repositories>
+
+    <!--构建jar上传仓库-->
+    <distributionManagement>
+        <repository>
+            <id>ifok-releases</id>
+            <name>maven-releases</name>
+            <url>https://maven.ifok.net:10202/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>ifok-snapshots</id>
+            <name>maven-snapshots</name>
+            <url>https://maven.ifok.net:10202/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

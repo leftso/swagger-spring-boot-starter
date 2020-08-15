@@ -1,5 +1,22 @@
 ### 简介
 spring boot 整合 springfox 2.9.2 实现api文档生成。
+### 使用说明
+在spring boot项目（版本高于2.0.8）引入依赖
+```xml
+<dependency>
+  <groupId>net.ifok.project</groupId>
+  <artifactId>swagger-boot-starter</artifactId>
+  <version>2.0.0</version>
+</dependency>
+```
+仓库地址
+```xml
+        <repository>
+            <id>ifok-releases</id>
+            <url>https://maven.ifok.net:10202/repository/maven-public/</url>
+        </repository>
+```
+
 
 ### 版本选择
 ##### 2.9.2
