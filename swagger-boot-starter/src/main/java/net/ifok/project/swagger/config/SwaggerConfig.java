@@ -3,10 +3,9 @@ package net.ifok.project.swagger.config;
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.CollectionUtils;
@@ -20,7 +19,6 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger.web.*;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -32,7 +30,12 @@ import java.util.List;
  */
 @Configuration
 @EnableSwagger2
+@Slf4j
 public class SwaggerConfig {
+    public SwaggerConfig(){
+      log.info("SwaggerConfig init ....");
+    }
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     SwaggerProperties swaggerProperties;
     /**
@@ -58,13 +61,13 @@ public class SwaggerConfig {
     }
 
     private ApiInfo apiInfo(){
-        return new ApiInfoBuilder().title(swaggerProperties.getUiTitle())
-                .description(swaggerProperties.getUiDescription())
+        return new ApiInfoBuilder().title(swaggerProperties.getApiTitle())
+                .description(swaggerProperties.getApiDescription())
                 /***
                  * 将“url”换成自己的ip:port
                  **/
-                .termsOfServiceUrl(swaggerProperties.getUiUrl())
-                .version(swaggerProperties.getUiVersion())
+                .termsOfServiceUrl(swaggerProperties.getApiUrl())
+                .version(swaggerProperties.getApiVersion())
                 .build();
     }
 

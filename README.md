@@ -6,17 +6,28 @@ spring boot 整合 springfox 2.9.2 实现api文档生成。
 <dependency>
   <groupId>net.ifok.project</groupId>
   <artifactId>swagger-boot-starter</artifactId>
-  <version>2.0.0</version>
+  <version>2.9.2</version>
 </dependency>
 ```
 仓库地址
 ```xml
         <repository>
             <id>ifok-releases</id>
-            <url>https://maven.ifok.net:10202/repository/maven-public/</url>
+            <url>https://nexus.ifok.net:10202/repository/maven-public/</url>
         </repository>
 ```
 
+### spring boot 配置说明
+````properties
+spring.swagger.config.enabled=true
+spring.swagger.config.api-title=API 开放文档
+spring.swagger.config.api-description=Api 接口说明
+spring.swagger.config.api-url=http://localhost:8080/swagger-ui.html
+spring.swagger.config.api-version=1.0.0
+spring.swagger.config.packages=
+spring.swagger.config.url-pattern=/**
+````
+> 提示: `spring.swagger.config.packages` 与 `spring.swagger.config.url-pattern` 可以只选择其中一个配置，如果两个同时配置则回取两个的并集。 
 
 ### 版本选择
 ##### 2.9.2

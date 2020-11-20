@@ -5,13 +5,15 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.ifok.project</groupId>
     <artifactId>swagger-boot-starter</artifactId>
-    <version>2.0.0</version>
+    <version>2.9.2</version>
     <packaging>jar</packaging>
     <properties>
+        <!--编译编码-->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <skipTests>true</skipTests>
         <java.version>1.8</java.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <skipTests>true</skipTests>
     </properties>
 
     <dependencyManagement>
@@ -72,12 +74,12 @@
         <repository>
             <id>ifok-releases</id>
             <name>maven-releases</name>
-            <url>https://maven.ifok.net:10202/repository/maven-releases/</url>
+            <url>https://nexus.ifok.net:10202/repository/maven-releases/</url>
         </repository>
         <snapshotRepository>
             <id>ifok-snapshots</id>
             <name>maven-snapshots</name>
-            <url>https://maven.ifok.net:10202/repository/maven-snapshots/</url>
+            <url>https://nexus.ifok.net:10202/repository/maven-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
     <build>
@@ -85,6 +87,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
                 <configuration>
                     <source>8</source>
                     <target>8</target>

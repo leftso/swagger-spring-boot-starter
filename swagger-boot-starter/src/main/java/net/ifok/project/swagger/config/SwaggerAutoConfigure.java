@@ -1,11 +1,11 @@
 package net.ifok.project.swagger.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+
 /**
  * @description TODO
  * 
@@ -13,16 +13,15 @@ import org.springframework.context.annotation.Configuration;
  * @date 2020/8/14 22:44
  **/
 @Configuration
-@EnableConfigurationProperties(SwaggerProperties.class)
-@ComponentScan(basePackages = "net.ifok.project.swagger.config")
+@Import({SwaggerProperties.class,SwaggerConfig.class})
 @ConditionalOnMissingBean(SwaggerAutoConfigure.class)
-@ConditionalOnProperty(prefix = "spring.swagger.config",value = "enabled",havingValue = "true")
+@Slf4j
 public class SwaggerAutoConfigure {
-    private final SwaggerProperties swaggerProperties;
+
 
     @Autowired
-    public SwaggerAutoConfigure(SwaggerProperties swaggerProperties) {
-        this.swaggerProperties = swaggerProperties;
+    public SwaggerAutoConfigure() {
+        log.info("SwaggerAutoConfigure init ...");
     }
 
 
