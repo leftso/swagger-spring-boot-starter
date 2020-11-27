@@ -1,7 +1,8 @@
 ### 简介
 spring boot 整合 springfox 2.9.2 实现api文档生成。
 ### 使用说明
-在spring boot项目（版本高于2.0.8）引入依赖
+在spring boot项目（兼容 2.0.8-2.4.0）
+引入依赖
 ```xml
 <dependency>
   <groupId>net.ifok.project</groupId>
