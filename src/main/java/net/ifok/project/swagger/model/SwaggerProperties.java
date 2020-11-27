@@ -1,4 +1,4 @@
-package net.ifok.project.swagger.config;
+package net.ifok.project.swagger.model;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
