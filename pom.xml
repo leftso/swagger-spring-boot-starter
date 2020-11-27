@@ -7,6 +7,31 @@
     <artifactId>swagger-boot-starter</artifactId>
     <version>2.9.2</version>
     <packaging>jar</packaging>
+    <name>swagger boot starter</name>
+    <description>
+        easy to use swagger in spring boot project.
+    </description>
+    <url>https://git.ifok.net:3000/java-base/swagger-boot-starter</url>
+    <scm>
+        <url>https://git.ifok.net:3000/java-base/swagger-boot-starter</url>
+    </scm>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>leftso</name>
+            <email>leftso@qq.com</email>
+            <organization>None</organization>
+        </developer>
+    </developers>
+
+
     <properties>
         <!--编译编码-->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -92,6 +117,52 @@
                     <source>8</source>
                     <target>8</target>
                 </configuration>
+            </plugin>
+            <!--说明：上传中央库，必须有 GPG插件、javadoc插件、source插件-->
+            <!-- GPG 打包插件-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- 源码 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Javadoc -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <configuration>
+                    <additionalparam>-Xdoclint:none</additionalparam>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
