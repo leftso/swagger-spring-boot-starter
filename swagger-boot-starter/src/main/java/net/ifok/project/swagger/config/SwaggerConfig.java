@@ -91,6 +91,8 @@ public class SwaggerConfig {
     }
 
     private static Optional<? extends Class<?>> declaringClass(RequestHandler input) {
+        //此版本忽略警告
+        //noinspection Guava
         return Optional.fromNullable(input.declaringClass());
     }
     /**----------------------上面部分处理多个包扫描问题-----------------**/
