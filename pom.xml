@@ -96,7 +96,7 @@
 
     <!--构建jar上传仓库-->
     <distributionManagement>
-        <repository>
+        <!--<repository>
             <id>ifok-releases</id>
             <name>maven-releases</name>
             <url>https://nexus.ifok.net:10202/repository/maven-releases/</url>
@@ -105,7 +105,16 @@
             <id>ifok-snapshots</id>
             <name>maven-snapshots</name>
             <url>https://nexus.ifok.net:10202/repository/maven-snapshots/</url>
+        </snapshotRepository>-->
+        <!--中央仓库上传地址-->
+        <snapshotRepository>
+            <id>maven-center</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
         </snapshotRepository>
+        <repository>
+            <id>maven-center</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
     </distributionManagement>
     <build>
         <plugins>
