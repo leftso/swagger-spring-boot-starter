@@ -11,9 +11,9 @@
     <description>
         Easy to use swagger in spring boot project.
     </description>
-    <url>https://git.ifok.net:3000/java-base/swagger-boot-starter</url>
+    <url>https://github.com/leftso/swagger-boot-starter</url>
     <scm>
-        <url>https://git.ifok.net:3000/java-base/swagger-boot-starter.git</url>
+        <url>https://github.com/leftso/swagger-boot-starter.git</url>
     </scm>
     <licenses>
         <license>
