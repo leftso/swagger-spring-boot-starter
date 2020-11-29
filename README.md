@@ -1,5 +1,5 @@
 ### 简介
-spring boot 整合 springfox 2.9.2 实现api文档生成。
+spring boot 整合 springfox 2.9.2 实现swagger api文档生成。
 ### 使用说明
 在spring boot项目（兼容 2.0.8-2.4.0）
 引入依赖
@@ -9,13 +9,6 @@ spring boot 整合 springfox 2.9.2 实现api文档生成。
   <artifactId>swagger-boot-starter</artifactId>
   <version>2.9.2</version>
 </dependency>
-```
-仓库地址
-```xml
-        <repository>
-            <id>ifok-releases</id>
-            <url>https://nexus.ifok.net:10202/repository/maven-public/</url>
-        </repository>
 ```
 
 ### spring boot 配置说明
@@ -61,3 +54,6 @@ spring.swagger.config.url-pattern=/**
 
 - http://springfox.github.io/springfox/
 - https://github.com/springfox/springfox
+
+### LICENSE
+Apache Software License, Version 2.0
