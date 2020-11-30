@@ -1,18 +1,17 @@
-# Swagger Boot Stater 
-## 简介
-spring boot 整合 springfox 实现swagger api文档生成。本项目主要简化整合流程，达到开箱即用，无需更多java代码配置。
-## 使用说明
+### 简介
+spring boot 整合 springfox 2.9.2 实现swagger api文档生成。
+### 使用说明
 在spring boot项目（兼容 2.0.8-2.4.0）
 引入依赖
 ```xml
 <dependency>
   <groupId>net.ifok.project</groupId>
   <artifactId>swagger-boot-starter</artifactId>
-  <version>2.10.0</version>
+  <version>2.9.2</version>
 </dependency>
 ```
 
-## spring boot 配置说明
+### spring boot 配置说明
 ````properties
 spring.swagger.config.enabled=true
 spring.swagger.config.api-title=API 开放文档
@@ -24,20 +23,32 @@ spring.swagger.config.url-pattern=/**
 ````
 > 提示: `spring.swagger.config.packages` 与 `spring.swagger.config.url-pattern` 可以只选择其中一个配置，如果两个同时配置则回取两个的并集。 
 
-## springfox相关注解使用说明
-- Spring 项目的controller类，添加@Api(tags="该controller的处理说明")
-    ```java
-    @Api(tags = "用户相关操作")
-    public class UserController {
-    
-        @ApiOperation("添加用户")
-        public Object addUser(){
-            return "success";
-        }
-    }
-    ```
-- Spring 项目的controller类，方法添加 @ApiOpertion("该接口说明")
-- 未完待续
+### 版本选择
+##### 2.9.2
+
+为何选择2.9.2版本
+
+![版本选择](screenshot/version.png)
+
+因为用的人多，且相对稳定。2.10.x/3.x目前存在一些bug，且与2.9.2版内部代码本差异较大
+。
+
+### 生成文档展示
+[提示] 2.9.2 版本的UI访问地址为 /swagger-ui.html;3.x /swagger-ui/index.html
+- 首页
+![首页](screenshot/swagger-home.png)
+
+- 新增POST
+![POST](screenshot/swagger-post.png)
+
+- 删除DELETE
+![DELETE](screenshot/swagger-delete.png)
+
+- 修改PUT
+![PUT](screenshot/swagger-put.png)
+
+- 查询GET
+![GET](screenshot/swagger-get.png)
 
 ### 更多参考
 
