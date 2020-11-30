@@ -92,14 +92,6 @@
 
     </dependencies>
 
-    <!--jar下载仓库配置-->
-    <repositories>
-        <repository>
-            <id>ifok-releases</id>
-            <url>https://maven.ifok.net:10202/repository/maven-public/</url>
-        </repository>
-    </repositories>
-
     <!--构建jar上传仓库-->
     <distributionManagement>
         <repository>
