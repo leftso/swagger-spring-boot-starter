@@ -15,9 +15,6 @@
  */
 package net.ifok.project.swagger.config;
 
-import com.google.common.base.Function;
-import com.google.common.base.Optional;
-import com.google.common.base.Predicate;
 import lombok.extern.slf4j.Slf4j;
 import net.ifok.project.swagger.model.SwaggerProperties;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +30,13 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger.web.*;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import springfox.documentation.swagger2.annotations.EnableSwagger2WebFlux;
+import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 
 /**
@@ -45,7 +46,8 @@ import java.util.List;
  * @date 2020/7/17 9:38
  */
 @Configuration
-@EnableSwagger2
+@EnableSwagger2WebMvc
+
 @Slf4j
 public class SwaggerConfig {
     public SwaggerConfig(){
@@ -90,7 +92,7 @@ public class SwaggerConfig {
 
     /**----------------------下面部分处理多个包扫描问题-----------------**/
     public static Predicate<RequestHandler> basePackage(final List<String> packages) {
-        return input -> declaringClass(input).transform(handlerPackage(packages)).or(true);
+        return input -> declaringClass(input).map(handlerPackage(packages)).orElse(true);
     }
 
     private static Function<Class<?>, Boolean> handlerPackage(final List<String> packages)     {
@@ -106,10 +108,10 @@ public class SwaggerConfig {
         };
     }
 
-    private static Optional<? extends Class<?>> declaringClass(RequestHandler input) {
+    private static Optional<Class<?>> declaringClass(RequestHandler input) {
         //此版本忽略警告
         //noinspection Guava
-        return Optional.fromNullable(input.declaringClass());
+        return Optional.ofNullable(input.declaringClass());
     }
     /**----------------------上面部分处理多个包扫描问题-----------------**/
 
