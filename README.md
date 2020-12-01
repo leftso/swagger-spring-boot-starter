@@ -2,7 +2,7 @@
 ## 简介
 spring boot 整合 springfox 实现swagger api文档生成。本项目主要简化整合流程，达到开箱即用，无需更多java代码配置。
 ## 使用说明
-在spring boot项目（兼容 2.0.8-2.4.0）
+在spring boot项目（兼容 2.2.0-2.4.0）
 引入依赖
 ```xml
 <dependency>
@@ -11,6 +11,34 @@ spring boot 整合 springfox 实现swagger api文档生成。本项目主要简�
   <version>2.10.1</version>
 </dependency>
 ```
+spring boot 介于2.0.0-2.20之家，引入方式如下
+````xml
+<dependency>
+  <groupId>net.ifok.project</groupId>
+  <artifactId>swagger-boot-starter</artifactId>
+  <version>2.10.1</version>
+  <exclusions>
+      <exclusion>
+          <groupId>org.springframework.plugin</groupId>
+          <artifactId>spring-plugin-core</artifactId>
+      </exclusion>
+      <exclusion>
+          <groupId>org.springframework.plugin</groupId>
+          <artifactId>spring-plugin-metadata</artifactId>
+      </exclusion>
+  </exclusions>
+</dependency>
+<dependency>
+    <groupId>org.springframework.plugin</groupId>
+    <artifactId>spring-plugin-core</artifactId>
+    <version>2.0.0.RELEASE</version>
+</dependency>
+<dependency>
+    <groupId>org.springframework.plugin</groupId>
+    <artifactId>spring-plugin-metadata</artifactId>
+    <version>2.0.0.RELEASE</version>
+</dependency>
+````
 
 ## spring boot 配置说明
 ````properties
