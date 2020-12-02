@@ -7,8 +7,8 @@ spring boot 整合 springfox 实现swagger api文档生成。本项目主要简�
 ```xml
 <dependency>
   <groupId>net.ifok.project</groupId>
-  <artifactId>swagger-boot-starter</artifactId>
-  <version>2.10.2</version>
+  <artifactId>swagger-spring-boot-starter</artifactId>
+  <version>1.2.0</version>
 </dependency>
 ```
 ### spring boot 介于2.0.0-2.20之间，引入方式
@@ -24,8 +24,8 @@ spring boot 整合 springfox 实现swagger api文档生成。本项目主要简�
 ```xml
 <dependency>
   <groupId>net.ifok.project</groupId>
-  <artifactId>swagger-boot-starter</artifactId>
-  <version>2.10.2</version>
+  <artifactId>swagger-spring-boot-starter</artifactId>
+  <version>1.2.0</version>
 </dependency>
 ```
 
@@ -33,8 +33,8 @@ spring boot 整合 springfox 实现swagger api文档生成。本项目主要简�
 ````xml
 <dependency>
   <groupId>net.ifok.project</groupId>
-  <artifactId>swagger-boot-starter</artifactId>
-  <version>2.10.2</version>
+  <artifactId>swagger-spring-boot-starter</artifactId>
+  <version>1.2.0</version>
   <exclusions>
       <exclusion>
           <groupId>org.springframework.plugin</groupId>
