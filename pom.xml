@@ -4,16 +4,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.ifok.swagger</groupId>
-    <artifactId>swagger-boot-starter</artifactId>
-    <version>2.10.2</version>
+    <artifactId>swagger-spring-boot-starter</artifactId>
+    <version>1.2.0</version>
     <packaging>jar</packaging>
     <name>Swagger::Spring Boot::Starter</name>
     <description>
         Easy to use swagger in spring boot project.
     </description>
-    <url>https://github.com/leftso/swagger-boot-starter</url>
+    <url>https://github.com/leftso/swagger-spring-boot-starter</url>
     <scm>
-        <url>https://github.com/leftso/swagger-boot-starter.git</url>
+        <url>https://github.com/leftso/swagger-spring-boot-starter.git</url>
     </scm>
     <licenses>
         <license>
@@ -39,53 +39,41 @@
         <java.version>1.8</java.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <spring-boot.version>2.2.2.RELEASE</spring-boot.version>
+        <spring-boot.version>2.2.0.RELEASE</spring-boot.version>
         <spring-plugin.version>2.0.0.RELEASE</spring-plugin.version>
+        <springfox.version>2.10.5</springfox.version>
     </properties>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.plugin</groupId>
-                <artifactId>spring-plugin-core</artifactId>
-                <version>2.0.0.RELEASE</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.plugin</groupId>
-                <artifactId>spring-plugin-metadata</artifactId>
-                <version>2.0.0.RELEASE</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
     <dependencies>
-        <!--spring fox 2.x 正确打开方式-->
+
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
-            <version>2.10.5</version>
+            <version>${springfox.version}</version>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
-            <version>2.10.5</version>
+            <version>${springfox.version}</version>
         </dependency>
-        <!--提示：2.10.x必须添加以下依赖，2.9.x则不需要-->
+        <!--tips：2.10.x need，2.9.x not need-->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-spring-webmvc</artifactId>
-            <version>2.10.5</version>
+            <version>${springfox.version}</version>
         </dependency>
-        <!--自动装配配置相关-->
+
+        <!--auto config-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
-            <version>2.2.2.RELEASE</version>
+            <version>${spring-boot.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
-            <version>2.2.2.RELEASE</version>
+            <version>${spring-boot.version}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -98,9 +86,8 @@
 
     </dependencies>
 
-    <!--构建jar上传仓库-->
     <distributionManagement>
-        <!--中央仓库上传地址-->
+        <!--oss-->
         <snapshotRepository>
             <id>maven-center</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
@@ -121,8 +108,7 @@
                     <target>8</target>
                 </configuration>
             </plugin>
-            <!--说明：上传中央库，必须有 GPG插件、javadoc插件、source插件-->
-            <!-- GPG 打包插件-->
+            <!-- GPG SIGN-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
@@ -136,7 +122,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- 源码 -->
+            <!-- SOURCE -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
