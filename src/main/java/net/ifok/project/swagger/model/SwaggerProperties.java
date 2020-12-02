@@ -65,6 +65,34 @@ public class SwaggerProperties {
      * api版本号
      */
     private String apiVersion ="1.0.0";
+    /**
+     * 版权信息
+     */
+    private String license;
+    /**
+     * 版权连接
+     */
+    private String licenseUrl;
+    /**
+     * 联系信息
+     */
+    private Contact contact=new Contact();
+
+    @Data
+    public  class  Contact{
+        /**
+         * 联系人名
+         */
+        private String name;
+        /**
+         * 联系网站
+         */
+        private String url;
+        /**
+         * 联系人邮箱
+         */
+        private String email;
+    }
 
 
 }
