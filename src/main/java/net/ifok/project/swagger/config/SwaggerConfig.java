@@ -27,6 +27,7 @@ import springfox.documentation.RequestHandler;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger.web.*;
@@ -86,6 +87,13 @@ public class SwaggerConfig {
                  **/
                 .termsOfServiceUrl(swaggerProperties.getApiUrl())
                 .version(swaggerProperties.getApiVersion())
+                .license(swaggerProperties.getLicense())
+                .licenseUrl(swaggerProperties.getLicenseUrl())
+                .contact(new Contact(
+                        swaggerProperties.getContact().getName(),
+                        swaggerProperties.getContact().getUrl(),
+                        swaggerProperties.getContact().getEmail())
+                )
                 .build();
     }
 
