@@ -6,7 +6,7 @@ spring boot 整合 springfox 实现swagger api文档生成。本项目主要简�
 引入依赖
 ```xml
 <dependency>
-  <groupId>net.ifok.project</groupId>
+  <groupId>net.ifok.swagger</groupId>
   <artifactId>swagger-spring-boot-starter</artifactId>
   <version>1.2.0</version>
 </dependency>
