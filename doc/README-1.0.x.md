@@ -7,7 +7,7 @@ spring boot 整合 springfox 2.9.2 实现swagger api文档生成。
 <dependency>
   <groupId>net.ifok.swagger</groupId>
   <artifactId>swagger-spring-boot-starter</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
 </dependency>
 ```
 
