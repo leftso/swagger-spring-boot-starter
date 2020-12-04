@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-net.ifok.project.swagger.SwaggerAutoConfigure
+net.ifok.swagger.SwaggerAutoConfigure

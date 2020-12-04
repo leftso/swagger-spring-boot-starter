@@ -13,20 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.ifok.project.swagger;
+package net.ifok.swagger;
 
 import lombok.extern.slf4j.Slf4j;
-import net.ifok.project.swagger.config.SwaggerConfig;
-import net.ifok.project.swagger.model.SwaggerProperties;
+import net.ifok.swagger.config.SwaggerConfig;
+import net.ifok.swagger.model.SwaggerProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 /**
- * @description TODO
+ * @description AUTO
  * 
- * @author lee
+ * @author leftso
  * @date 2020/8/14 22:44
  **/
 @Configuration

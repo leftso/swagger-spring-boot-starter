@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.ifok.project.swagger.model;
+package net.ifok.swagger.model;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * @description swagger 配置文件
  * 
- * @author lee
+ * @author leftso
  * @date 2020/8/14 22:13
  **/
 @Component
