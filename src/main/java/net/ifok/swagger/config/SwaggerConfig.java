@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.ifok.project.swagger.config;
+package net.ifok.swagger.config;
 
 import lombok.extern.slf4j.Slf4j;
-import net.ifok.project.swagger.model.SwaggerProperties;
+import net.ifok.swagger.model.SwaggerProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -42,12 +42,11 @@ import java.util.function.Predicate;
 /**
  * @Description:   spring fox swagger 配置，分为数据配置项和UI配置项
  * 
- * @author lee
+ * @author leftso
  * @date 2020/7/17 9:38
  */
 @Configuration
 @EnableSwagger2WebMvc
-
 @Slf4j
 public class SwaggerConfig {
     public SwaggerConfig(){
