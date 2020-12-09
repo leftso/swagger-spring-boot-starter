@@ -17,7 +17,11 @@ package net.ifok.swagger.config;
 
 import lombok.extern.slf4j.Slf4j;
 import net.ifok.swagger.model.SwaggerProperties;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,8 +37,13 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger.web.*;
 import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -48,49 +57,131 @@ import java.util.function.Predicate;
 @Configuration
 @EnableSwagger2WebMvc
 @Slf4j
-public class SwaggerConfig {
+public class SwaggerConfig implements BeanFactoryAware {
+    public final static String DOCKET_POST_SUFFIX="_API_DOCKET_NAME";
+    private BeanFactory beanFactory;
+
+    @Override
+    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+        this.beanFactory=beanFactory;
+    }
+
     public SwaggerConfig(){
       log.info("SwaggerConfig init ....");
     }
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+
     @Autowired
     SwaggerProperties swaggerProperties;
+
     /**
-     * 数据配置部分
+     * 默认组创建
      * @return
      */
-    @Bean
-    @ConditionalOnMissingBean
-    public Docket swaggerDataConfig(){
+    private Docket defaultDocket(){
         Docket docket = new Docket(DocumentationType.SWAGGER_2);
         //是否启用
         docket = docket.enable(swaggerProperties.getEnabled());
-        docket = docket.apiInfo(apiInfo());
+        docket = docket.apiInfo(getApiInfo(swaggerProperties.getApiTitle(),swaggerProperties.getApiDescription(),swaggerProperties.getTermsOfServiceUrl(),
+                swaggerProperties.getApiVersion(),swaggerProperties.getLicense(),swaggerProperties.getLicenseUrl(),
+                swaggerProperties.getContact()));
         //设置路径匹配
         if (!StringUtils.isEmpty(swaggerProperties.getUrlPattern())){
             docket=docket.select().paths(PathSelectors.ant(swaggerProperties.getUrlPattern())).build();
         }
         //设置包配置
-        if (!CollectionUtils.isEmpty(swaggerProperties.getPackages())){
-            docket=docket.select().apis(basePackage(swaggerProperties.getPackages())).build();
+        if (Objects.nonNull(swaggerProperties.getPackages())&&swaggerProperties.getPackages().length>0){
+            docket=docket.select().apis(basePackage(Arrays.asList(swaggerProperties.getPackages()))).build();
         }
         return docket;
     }
 
-    private ApiInfo apiInfo(){
-        return new ApiInfoBuilder().title(swaggerProperties.getApiTitle())
-                .description(swaggerProperties.getApiDescription())
+    @Bean
+    @ConditionalOnMissingBean
+    public List<Docket> apiDockets(){
+        ConfigurableBeanFactory configurableBeanFactory = (ConfigurableBeanFactory) beanFactory;
+        List<Docket> dockets=new ArrayList<>();
+        if (!swaggerProperties.getEnabled()){
+            //未启用流程
+
+            Docket docket = new Docket(DocumentationType.SWAGGER_2);
+            //是否启用
+            docket = docket.enable(swaggerProperties.getEnabled());
+            configurableBeanFactory.registerSingleton("defaultDocket", docket);
+            dockets.add(docket);
+            return dockets;
+        }
+        Map<String, SwaggerProperties.DocketInfo> group = swaggerProperties.getGroup();
+        if (CollectionUtils.isEmpty(group)){
+            //没有分组
+            Docket docket = defaultDocket();
+            configurableBeanFactory.registerSingleton("defaultDocket", docket);
+            dockets.add(docket);
+        }
+
+        //有分组情况
+        Set<String> groupKeys = group.keySet();
+        for (String groupKey : groupKeys) {
+            SwaggerProperties.DocketInfo docketInfo = group.get(groupKey);
+            Docket docket = getDocket(docketInfo,groupKey);
+            configurableBeanFactory.registerSingleton(groupKey+DOCKET_POST_SUFFIX,docket);
+            dockets.add(docket);
+        }
+        return dockets;
+    }
+
+    /**
+     * 生成docket
+     * @param docketInfo
+     * @return
+     */
+    private Docket getDocket(SwaggerProperties.DocketInfo docketInfo,String groupName){
+        Docket docket = new Docket(DocumentationType.SWAGGER_2);
+        String docketInfoGroupName = docketInfo.getGroupName();
+        if (StringUtils.isEmpty(docketInfoGroupName)){
+            docketInfoGroupName=groupName;
+        }
+        docket.groupName(docketInfoGroupName);
+        docket = docket.apiInfo(getApiInfo(docketInfo.getApiTitle(),docketInfo.getApiDescription(),
+                docketInfo.getTermsOfServiceUrl(), docketInfo.getApiVersion(),
+                docketInfo.getLicense(),docketInfo.getLicenseUrl(),
+                docketInfo.getContact()));
+        //设置路径匹配
+        if (!StringUtils.isEmpty(docketInfo.getUrlPattern())){
+            docket=docket.select().paths(PathSelectors.ant(docketInfo.getUrlPattern())).build();
+        }
+        //设置包配置
+        if (Objects.nonNull(docketInfo.getPackages())&&docketInfo.getPackages().length>0){
+            docket=docket.select().apis(basePackage(Arrays.asList(docketInfo.getPackages()))).build();
+        }
+        return docket;
+    }
+
+    /**
+     * api 信息
+     * @param title
+     * @param description
+     * @param termsOfServiceUrl
+     * @param version
+     * @param license
+     * @param licenseUrl
+     * @param contact
+     * @return
+     */
+    private ApiInfo getApiInfo(String title, String description, String termsOfServiceUrl, String version, String license,
+                               String licenseUrl, SwaggerProperties.Contact contact){
+        return new ApiInfoBuilder().title(title)
+                .description(description)
                 /***
                  * 将“url”换成自己的ip:port
                  **/
-                .termsOfServiceUrl(swaggerProperties.getApiUrl())
-                .version(swaggerProperties.getApiVersion())
-                .license(swaggerProperties.getLicense())
-                .licenseUrl(swaggerProperties.getLicenseUrl())
+                .termsOfServiceUrl(termsOfServiceUrl)
+                .version(version)
+                .license(license)
+                .licenseUrl(licenseUrl)
                 .contact(new Contact(
-                        swaggerProperties.getContact().getName(),
-                        swaggerProperties.getContact().getUrl(),
-                        swaggerProperties.getContact().getEmail())
+                        contact.getName(),
+                        contact.getUrl(),
+                        contact.getEmail())
                 )
                 .build();
     }
@@ -150,4 +241,6 @@ public class SwaggerConfig {
                 .validatorUrl(null).build();
         // @formatter:on
     }
+
+
 }

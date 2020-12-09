@@ -16,11 +16,16 @@
 package net.ifok.swagger.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @description swagger 配置文件
@@ -29,7 +34,7 @@ import java.util.List;
  * @date 2020/8/14 22:13
  **/
 @Component
-@ConfigurationProperties(prefix = "spring.swagger.config")
+@ConfigurationProperties(prefix = "spring.swagger")
 @Data
 @Slf4j
 public class SwaggerProperties {
@@ -48,7 +53,7 @@ public class SwaggerProperties {
     /**
      * 需要生成文档的controller包路径，例如com.demo.controller
      */
-    private List<String> packages;
+    private String [] packages;
     /***
      * api文档名称
      */
@@ -58,9 +63,9 @@ public class SwaggerProperties {
      */
     private String apiDescription ="Api 接口说明";
     /***
-     * api接口地址
+     * 服务条款URL
      */
-    private String apiUrl ="http://localhost:8080/swagger-ui.html";
+    private String termsOfServiceUrl ="";
     /***
      * api版本号
      */
@@ -78,8 +83,14 @@ public class SwaggerProperties {
      */
     private Contact contact=new Contact();
 
+    /**
+     * 分组文档
+     **/
+    private Map<String, DocketInfo> group = new LinkedHashMap<>();
+
     @Data
-    public  class  Contact{
+    @NoArgsConstructor
+    public static class  Contact{
         /**
          * 联系人名
          */
@@ -94,5 +105,51 @@ public class SwaggerProperties {
         private String email;
     }
 
+
+    @Data
+    @NoArgsConstructor
+    public static class DocketInfo {
+        /**
+         * 需要生成文档的controller包路径，例如com.demo.controller
+         */
+        private String[] packages;
+
+        /**
+         * swagger会解析的url规则
+         **/
+        private String urlPattern = "";
+        /**
+         * 默认值为groupKey
+         */
+        private String groupName;
+        /***
+         * api文档名称
+         */
+        private String apiTitle ="";
+        /**
+         * api文档详细描述
+         */
+        private String apiDescription ="";
+        /***
+         * 服务条款URL
+         */
+        private String termsOfServiceUrl ="";
+        /***
+         * api版本号
+         */
+        private String apiVersion ="";
+        /**
+         * 许可证
+         **/
+        private String license = "";
+        /**
+         * 许可证URL
+         **/
+        private String licenseUrl = "";
+        /**
+         * 联系信息
+         */
+        private Contact contact = new Contact();
+    }
 
 }
