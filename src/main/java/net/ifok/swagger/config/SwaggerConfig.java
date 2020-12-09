@@ -56,7 +56,7 @@ import java.util.function.Predicate;
 @EnableSwagger2WebMvc
 @Slf4j
 public class SwaggerConfig implements BeanFactoryAware {
-
+    public final static String DOCKET_POST_SUFFIX="_API_DOCKET_NAME";
     private BeanFactory beanFactory;
 
     @Override
@@ -121,7 +121,7 @@ public class SwaggerConfig implements BeanFactoryAware {
         for (String groupKey : groupKeys) {
             SwaggerProperties.DocketInfo docketInfo = group.get(groupKey);
             Docket docket = getDocket(docketInfo,groupKey);
-            configurableBeanFactory.registerSingleton(groupKey,docket);
+            configurableBeanFactory.registerSingleton(groupKey+DOCKET_POST_SUFFIX,docket);
             dockets.add(docket);
         }
         return dockets;

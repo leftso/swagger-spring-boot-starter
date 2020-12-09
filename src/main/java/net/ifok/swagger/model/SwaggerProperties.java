@@ -112,7 +112,7 @@ public class SwaggerProperties {
         /**
          * 需要生成文档的controller包路径，例如com.demo.controller
          */
-        private List<String> packages=new ArrayList<>();
+        private List<String> packages;
 
         /**
          * swagger会解析的url规则
