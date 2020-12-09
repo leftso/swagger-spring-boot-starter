@@ -1,8 +1,8 @@
-# Swagger Boot Stater 
+# Swagger Spring Boot Stater 
 ## 简介
 spring boot 整合 springfox 实现swagger api文档生成。本项目主要简化整合流程，达到开箱即用，无需更多java代码配置。
 ## 使用说明
-### spring boot项目（兼容 2.2.0-2.4.0）
+### Spring Boot项目（兼容 2.2.0-2.4.0）
 引入依赖
 ```xml
 <dependency>
@@ -11,7 +11,7 @@ spring boot 整合 springfox 实现swagger api文档生成。本项目主要简�
   <version>1.2.1</version>
 </dependency>
 ```
-### spring boot 介于2.0.0-2.20之间，引入方式
+### Spring Boot 介于2.0.0-2.20之间，引入方式
 #### 方法一：
 ````xml
     <properties>
@@ -58,7 +58,7 @@ spring boot 整合 springfox 实现swagger api文档生成。本项目主要简�
 </dependency>
 ````
 
-## spring boot 配置说明
+## Spring Boot 配置说明
 ### 单组配置
 ````properties
 spring.swagger.url-pattern=/**
@@ -103,7 +103,7 @@ spring.swagger.group.bbb.license-url=
 ```
 > 注意：当同时配置了多分组和单分组，单分组将会无效！
 
-## springfox相关注解使用说明
+## Springfox相关注解使用说明
 - Spring 项目的controller类，添加@Api(tags="该controller的处理说明")
     ```java
     @Api(tags = "用户相关操作")
