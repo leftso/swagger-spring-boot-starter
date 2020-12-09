@@ -38,8 +38,10 @@ import springfox.documentation.swagger.web.*;
 import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
@@ -87,8 +89,8 @@ public class SwaggerConfig implements BeanFactoryAware {
             docket=docket.select().paths(PathSelectors.ant(swaggerProperties.getUrlPattern())).build();
         }
         //设置包配置
-        if (!CollectionUtils.isEmpty(swaggerProperties.getPackages())){
-            docket=docket.select().apis(basePackage(swaggerProperties.getPackages())).build();
+        if (Objects.nonNull(swaggerProperties.getPackages())&&swaggerProperties.getPackages().length>0){
+            docket=docket.select().apis(basePackage(Arrays.asList(swaggerProperties.getPackages()))).build();
         }
         return docket;
     }
@@ -148,8 +150,8 @@ public class SwaggerConfig implements BeanFactoryAware {
             docket=docket.select().paths(PathSelectors.ant(docketInfo.getUrlPattern())).build();
         }
         //设置包配置
-        if (!CollectionUtils.isEmpty(docketInfo.getPackages())){
-            docket=docket.select().apis(basePackage(docketInfo.getPackages())).build();
+        if (Objects.nonNull(docketInfo.getPackages())&&docketInfo.getPackages().length>0){
+            docket=docket.select().apis(basePackage(Arrays.asList(docketInfo.getPackages()))).build();
         }
         return docket;
     }

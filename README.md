@@ -25,7 +25,7 @@ spring boot 整合 springfox 实现swagger api文档生成。本项目主要简�
 <dependency>
   <groupId>net.ifok.swagger</groupId>
   <artifactId>swagger-spring-boot-starter</artifactId>
-  <version>1.2.0</version>
+  <version>1.2.2</version>
 </dependency>
 ```
 
@@ -34,7 +34,7 @@ spring boot 整合 springfox 实现swagger api文档生成。本项目主要简�
 <dependency>
   <groupId>net.ifok.swagger</groupId>
   <artifactId>swagger-spring-boot-starter</artifactId>
-  <version>1.2.0</version>
+  <version>1.2.2</version>
   <exclusions>
       <exclusion>
           <groupId>org.springframework.plugin</groupId>
