@@ -8,9 +8,12 @@ spring boot 整合 springfox 实现swagger api文档生成。本项目主要简�
 <dependency>
   <groupId>net.ifok.swagger</groupId>
   <artifactId>swagger-spring-boot-starter</artifactId>
-  <version>1.2.1</version>
+  <version>1.3.0</version>
 </dependency>
 ```
+> 提示：
+> 1.3.0 有两个ui界面，`http://localhost:8080/doc.html` 和`http://localhost:8080/swagger-ui.html`
+
 ### Spring Boot 介于2.0.0-2.20之间，引入方式
 #### 方法一：
 ````xml
@@ -25,7 +28,7 @@ spring boot 整合 springfox 实现swagger api文档生成。本项目主要简�
 <dependency>
   <groupId>net.ifok.swagger</groupId>
   <artifactId>swagger-spring-boot-starter</artifactId>
-  <version>1.2.2</version>
+  <version>1.3.0</version>
 </dependency>
 ```
 
@@ -34,7 +37,7 @@ spring boot 整合 springfox 实现swagger api文档生成。本项目主要简�
 <dependency>
   <groupId>net.ifok.swagger</groupId>
   <artifactId>swagger-spring-boot-starter</artifactId>
-  <version>1.2.2</version>
+  <version>1.3.0</version>
   <exclusions>
       <exclusion>
           <groupId>org.springframework.plugin</groupId>
