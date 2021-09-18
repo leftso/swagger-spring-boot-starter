@@ -29,14 +29,18 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import springfox.documentation.RequestHandler;
 import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
+import springfox.documentation.service.Parameter;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger.web.*;
 import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -70,7 +74,7 @@ public class SwaggerConfig implements BeanFactoryAware {
       log.info("SwaggerConfig init ....");
     }
 
-    @Autowired
+    @Resource
     SwaggerProperties swaggerProperties;
 
     /**
@@ -92,6 +96,26 @@ public class SwaggerConfig implements BeanFactoryAware {
         if (Objects.nonNull(swaggerProperties.getPackages())&&swaggerProperties.getPackages().length>0){
             docket=docket.select().apis(basePackage(Arrays.asList(swaggerProperties.getPackages()))).build();
         }
+
+        List<SwaggerProperties.GlobalParam> globalParams = swaggerProperties.getGlobalParams();
+        if (globalParams!=null&&globalParams.size()>0){
+            ParameterBuilder ticketPar = new ParameterBuilder();
+            List<Parameter> pars = new ArrayList<Parameter>();
+
+            for (SwaggerProperties.GlobalParam globalParam : globalParams) {
+                ticketPar.name(globalParam.getParamName())
+                        .description(globalParam.getParamDesc())
+                        .modelRef(new ModelRef(globalParam.getDataType()))
+                        .parameterType(globalParam.getParamType())
+                        //header中的ticket参数非必填，传空也可以
+                        .required(globalParam.isRequired()).build();
+                //根据每个方法名也知道当前方法在设置什么参数
+                pars.add(ticketPar.build());
+                docket.globalOperationParameters(pars);
+            }
+        }
+
+
         return docket;
     }
 

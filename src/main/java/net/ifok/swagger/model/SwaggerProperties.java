@@ -82,6 +82,10 @@ public class SwaggerProperties {
      * 联系信息
      */
     private Contact contact=new Contact();
+    /***
+     * 全局参数
+     */
+    private List<GlobalParam> globalParams;
 
     /**
      * 分组文档
@@ -150,6 +154,44 @@ public class SwaggerProperties {
          * 联系信息
          */
         private Contact contact = new Contact();
+
+        /***
+         * 全局参数
+         */
+        private List<GlobalParam> globalParams;
+    }
+
+    /**
+     * 全局参数
+     */
+    @Data
+    @NoArgsConstructor
+    public static class GlobalParam{
+        /**
+         * 参数名称
+         */
+        String paramName;
+        /**
+         * 参数说明
+         */
+        String paramDesc;
+        /***
+         *
+         * 参数例子
+         */
+        String paramExample;
+        /***
+         * 参数类型，如：path、query、body、form、header
+         */
+        String paramType;
+        /**
+         * 参数类型，默认string，可选int、list
+         */
+        String dataType="string";
+        /**
+         * 是否必须
+         */
+        boolean required=false;
     }
 
 }
