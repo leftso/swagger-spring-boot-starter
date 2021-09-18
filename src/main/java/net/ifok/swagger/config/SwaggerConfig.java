@@ -97,14 +97,17 @@ public class SwaggerConfig implements BeanFactoryAware {
             docket=docket.select().apis(basePackage(Arrays.asList(swaggerProperties.getPackages()))).build();
         }
 
+        /***
+         * 全局参数设置
+         */
         List<SwaggerProperties.GlobalParam> globalParams = swaggerProperties.getGlobalParams();
         if (globalParams!=null&&globalParams.size()>0){
             ParameterBuilder ticketPar = new ParameterBuilder();
             List<Parameter> pars = new ArrayList<Parameter>();
-
             for (SwaggerProperties.GlobalParam globalParam : globalParams) {
                 ticketPar.name(globalParam.getParamName())
                         .description(globalParam.getParamDesc())
+                        .defaultValue(globalParam.getParamExample())
                         .modelRef(new ModelRef(globalParam.getDataType()))
                         .parameterType(globalParam.getParamType())
                         //header中的ticket参数非必填，传空也可以
@@ -176,6 +179,27 @@ public class SwaggerConfig implements BeanFactoryAware {
         //设置包配置
         if (Objects.nonNull(docketInfo.getPackages())&&docketInfo.getPackages().length>0){
             docket=docket.select().apis(basePackage(Arrays.asList(docketInfo.getPackages()))).build();
+        }
+
+        /***
+         * 全局参数设置
+         */
+        List<SwaggerProperties.GlobalParam> globalParams = swaggerProperties.getGlobalParams();
+        if (globalParams!=null&&globalParams.size()>0){
+            ParameterBuilder ticketPar = new ParameterBuilder();
+            List<Parameter> pars = new ArrayList<Parameter>();
+            for (SwaggerProperties.GlobalParam globalParam : globalParams) {
+                ticketPar.name(globalParam.getParamName())
+                        .description(globalParam.getParamDesc())
+                        .defaultValue(globalParam.getParamExample())
+                        .modelRef(new ModelRef(globalParam.getDataType()))
+                        .parameterType(globalParam.getParamType())
+                        //header中的ticket参数非必填，传空也可以
+                        .required(globalParam.isRequired()).build();
+                //根据每个方法名也知道当前方法在设置什么参数
+                pars.add(ticketPar.build());
+                docket.globalOperationParameters(pars);
+            }
         }
         return docket;
     }
