@@ -8,7 +8,7 @@ spring boot 整合 springfox 实现swagger api文档生成。本项目主要简�
 <dependency>
   <groupId>net.ifok.swagger</groupId>
   <artifactId>swagger-spring-boot-starter</artifactId>
-  <version>1.3.0</version>
+  <version>1.3.6</version>
 </dependency>
 ```
 > 提示：
@@ -105,6 +105,37 @@ spring.swagger.group.bbb.license=Apache 2
 spring.swagger.group.bbb.license-url=
 ```
 > 注意：当同时配置了多分组和单分组，单分组将会无效！
+
+其他配置
+- 全局参数
+- 全局HTTP状态码响应说明（注意200的响应说明内容改不了）
+````yaml
+spring: 
+  swagger:
+    global-params:
+      - paramName: accessToken
+        paramDesc: token令牌
+        paramType: header
+        paramExample: 123456
+        required: true
+    global-response-messages:
+      - method: POST
+        codeMessages:
+          - code: 200
+            message: okkk
+          - code: 401
+            message: nologin
+          - code: 403
+            message: 权限不足
+      - method: GET
+        codeMessages:
+          - code: 200
+            message: okkk
+          - code: 401
+            message: nologin
+          - code: 403
+            message: 权限不足
+````
 
 ## Springfox相关注解使用说明
 - Spring 项目的controller类，添加@Api(tags="该controller的处理说明")

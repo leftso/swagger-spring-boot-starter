@@ -20,6 +20,7 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -86,6 +87,10 @@ public class SwaggerProperties {
      * 全局参数
      */
     private List<GlobalParam> globalParams;
+    /**
+     * 全局http 方法对应状态码返回说明
+     */
+    private List<GlobalResponseMessage> globalResponseMessages;
 
     /**
      * 分组文档
@@ -192,6 +197,34 @@ public class SwaggerProperties {
          * 是否必须
          */
         boolean required=false;
+    }
+
+
+    @Data
+    @NoArgsConstructor
+    public static class GlobalResponseMessage{
+        /**
+         * 请求方法
+         */
+        RequestMethod method;
+        /**
+         * 状态码-对应状态码说明清单
+         */
+        List<CodeMessage> codeMessages;
+
+    }
+
+    @Data
+    @NoArgsConstructor
+    public static class CodeMessage{
+        /**
+         * http 状态码，如200
+         */
+        int code;
+        /**
+         * 状态码说明
+         */
+        String message;
     }
 
 }

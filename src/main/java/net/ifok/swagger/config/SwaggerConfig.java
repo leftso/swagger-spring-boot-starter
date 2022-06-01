@@ -27,27 +27,24 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RequestMethod;
 import springfox.documentation.RequestHandler;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.ResponseMessageBuilder;
 import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.service.Parameter;
+import springfox.documentation.service.ResponseMessage;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger.web.*;
 import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -115,6 +112,28 @@ public class SwaggerConfig implements BeanFactoryAware {
                 //根据每个方法名也知道当前方法在设置什么参数
                 pars.add(ticketPar.build());
                 docket.globalOperationParameters(pars);
+            }
+        }
+
+
+        //处理全局http状态码说明
+        if (CollectionUtils.isEmpty(swaggerProperties.getGlobalResponseMessages())){
+            RequestMethod[] requestMethods = RequestMethod.values();
+            for (RequestMethod requestMethod : requestMethods) {
+                docket.globalResponseMessage(requestMethod, Collections.singletonList(new ResponseMessageBuilder().code(200).message("Ok").build()));
+            }
+        }else{
+            List<SwaggerProperties.GlobalResponseMessage> globalResponseMessages = swaggerProperties.getGlobalResponseMessages();
+            for (SwaggerProperties.GlobalResponseMessage globalResponseMessage : globalResponseMessages) {
+                List<SwaggerProperties.CodeMessage> codeMessages = globalResponseMessage.getCodeMessages();
+                if (!CollectionUtils.isEmpty(codeMessages)){
+                    List<ResponseMessage> messageList=new ArrayList<>();
+                    for (SwaggerProperties.CodeMessage codeMessage : codeMessages) {
+                        messageList.add(
+                                new ResponseMessageBuilder().code(codeMessage.getCode()).message(codeMessage.getMessage()).build());
+                    }
+                    docket.globalResponseMessage(globalResponseMessage.getMethod(),messageList);
+                }
             }
         }
 
@@ -199,6 +218,27 @@ public class SwaggerConfig implements BeanFactoryAware {
                 //根据每个方法名也知道当前方法在设置什么参数
                 pars.add(ticketPar.build());
                 docket.globalOperationParameters(pars);
+            }
+        }
+
+        //处理全局http状态码说明
+        if (CollectionUtils.isEmpty(swaggerProperties.getGlobalResponseMessages())){
+            RequestMethod[] requestMethods = RequestMethod.values();
+            for (RequestMethod requestMethod : requestMethods) {
+                docket.globalResponseMessage(requestMethod, Collections.singletonList(new ResponseMessageBuilder().code(200).message("Ok").build()));
+            }
+        }else{
+            List<SwaggerProperties.GlobalResponseMessage> globalResponseMessages = swaggerProperties.getGlobalResponseMessages();
+            for (SwaggerProperties.GlobalResponseMessage globalResponseMessage : globalResponseMessages) {
+                List<SwaggerProperties.CodeMessage> codeMessages = globalResponseMessage.getCodeMessages();
+                if (!CollectionUtils.isEmpty(codeMessages)){
+                    List<ResponseMessage> messageList=new ArrayList<>();
+                    for (SwaggerProperties.CodeMessage codeMessage : codeMessages) {
+                        messageList.add(
+                                new ResponseMessageBuilder().code(codeMessage.getCode()).message(codeMessage.getMessage()).build());
+                    }
+                    docket.globalResponseMessage(globalResponseMessage.getMethod(),messageList);
+                }
             }
         }
         return docket;
