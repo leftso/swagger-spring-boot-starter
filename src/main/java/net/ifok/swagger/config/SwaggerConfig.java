@@ -20,7 +20,6 @@ import net.ifok.swagger.model.SwaggerProperties;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -144,6 +143,12 @@ public class SwaggerConfig implements BeanFactoryAware {
     @Bean
     @ConditionalOnMissingBean
     public List<Docket> apiDockets(){
+        String docPath = swaggerProperties.getDocPath();
+        if (!StringUtils.isEmpty(docPath)){
+            //处理springfox的api json路径
+            System.setProperty("springfox.documentation.swagger.v2.path",docPath);
+        }
+
         ConfigurableBeanFactory configurableBeanFactory = (ConfigurableBeanFactory) beanFactory;
         List<Docket> dockets=new ArrayList<>();
         if (!swaggerProperties.getEnabled()){
@@ -162,6 +167,7 @@ public class SwaggerConfig implements BeanFactoryAware {
             Docket docket = defaultDocket();
             configurableBeanFactory.registerSingleton("defaultDocket", docket);
             dockets.add(docket);
+            return dockets;
         }
 
         //有分组情况

@@ -22,8 +22,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +45,10 @@ public class SwaggerProperties {
      * 启用swagger api
      */
     private Boolean enabled=true;
+    /**
+     * 文档路径，默认/v2/api-docs
+     */
+    private String docPath ="/v2/api-docs";
     /***
      * 需要生成文档的 api地址，例如：/api/**,默认/** 所有url都检查
      */

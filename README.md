@@ -8,7 +8,7 @@ spring boot 整合 springfox 实现swagger api文档生成。本项目主要简�
 <dependency>
   <groupId>net.ifok.swagger</groupId>
   <artifactId>swagger-spring-boot-starter</artifactId>
-  <version>1.3.6</version>
+  <version>1.3.7</version>
 </dependency>
 ```
 > 提示：
@@ -63,7 +63,9 @@ spring boot 整合 springfox 实现swagger api文档生成。本项目主要简�
 
 ## Spring Boot 配置说明
 ### 单组配置
+properties
 ````properties
+spring.swagger.api-path=/v2/api-docs
 spring.swagger.url-pattern=/**
 spring.swagger.packages=
 spring.swagger.api-title=API开放文档
@@ -71,10 +73,51 @@ spring.swagger.api-description=Api 接口说明
 spring.swagger.terms-of-service-url=
 spring.swagger.contact.name=联系人名
 spring.swagger.contact.email=abc@qq.com
-spring.swagger.contact.url=wwww.baidu.com
+spring.swagger.contact.url=www.baidu.com
 spring.swagger.license=Apache 2
 spring.swagger.license-url=
 ````
+yml
+````yaml
+spring: 
+  swagger:
+    api-path: /v2/api-docs
+    url-pattern: /**
+#    packages:
+    api-title: API开放文档
+    api-description: Api接口说明
+    terms-of-service-url: www.baidu.com
+    contact: 
+      name: 联系人
+      email: abc@qq.com
+      url: www.baidu.com
+    license: 许可名称
+    license-url: 许可详细内容地址
+    global-params:
+      - paramName: accessToken
+        paramDesc: token令牌
+        paramType: header
+        paramExample: 123456
+        required: true
+    global-response-messages:
+      - method: POST
+        codeMessages:
+          - code: 200
+            message: okkk
+          - code: 401
+            message: nologin
+          - code: 403
+            message: 权限不足
+      - method: GET
+        codeMessages:
+          - code: 200
+            message: okkk
+          - code: 401
+            message: nologin
+          - code: 403
+            message: 权限不足
+````
+
 > 提示: `spring.swagger.config.packages` 与 `spring.swagger.config.url-pattern` 可以只选择其中一个配置，如果两个同时配置则回取两个的并集。 
 
 ### 多组别配置
@@ -103,6 +146,7 @@ spring.swagger.group.bbb.contact.email=abc@qq.com
 spring.swagger.group.bbb.contact.url=wwww.baidu.com
 spring.swagger.group.bbb.license=Apache 2
 spring.swagger.group.bbb.license-url=
+
 ```
 > 注意：当同时配置了多分组和单分组，单分组将会无效！
 
@@ -156,6 +200,30 @@ spring:
 
 - http://springfox.github.io/springfox/
 - https://github.com/springfox/springfox
+
+## 更新日志
+#### 1.3.7
+- 支持配置和修改默认的api 文档json地址。`spring.swagger.api-path`
+
+#### 1.3.6
+- 1.新增支持配置全局响应消息。`spring.swagger.global-response-messages`
+
+#### 1.3.5
+- 1.修复number空指针问题；
+
+#### 1.3.4
+- 1.更新升级ui版本为2.1.2
+
+#### 1.3.3
+- 修复bug
+
+#### 1.3.2
+- 1.新增全局参数配置`spring.swagger.global-params`
+#### 1.3.1
+- 略
+#### 1.3.0
+- 添加新ui
+
 
 ### LICENSE
 Apache Software License, Version 2.0
